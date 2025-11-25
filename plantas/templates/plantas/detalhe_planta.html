@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}{{ planta.nome }}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6">
+        {% if planta.imagem %}
+            <img src="{{ planta.imagem.url }}" class="img-fluid rounded">
+        {% else %}
+            <img src="{% static 'images/default-planta.jpg' %}" class="img-fluid rounded">
+        {% endif %}
+    </div>
+    <div class="col-md-6">
+        <h2>{{ planta.nome }}</h2>
+        <p><strong>Espécie:</strong> {{ planta.especie }}</p>
+        <p><strong>Dificuldade:</strong> {{ planta.get_dificuldade_display }}</p>
+        <p><strong>Água:</strong> {{ planta.necessidade_agua }}</p>
+        <p><strong>Luz:</strong> {{ planta.necessidade_luz }}</p>
+        <p><strong>Descrição:</strong> {{ planta.descricao }}</p>
+        <p><strong>Autor:</strong> {{ planta.autor.username }}</p>
+        
+        {% if user == planta.autor %}
+            <a href="{% url 'editar_planta' planta.pk %}" class="btn btn-warning">Editar</a>
+            <a href="{% url 'excluir_planta' planta.pk %}" class="btn btn-danger">Excluir</a>
+        {% endif %}
+    </div>
+</div>
+
+<hr>
+<h3>📝 Dicas de Cultivo</h3>
+{% for dica in planta.dicas.all %}
+    <div class="card mb-2">
+        <div class="card-body">
+            <h5>{{ dica.titulo }} <span class="badge bg-success">{{ dica.get_estacao_display }}</span></h5>
+            <p>{{ dica.conteudo }}</p>
+        </div>
+    </div>
+{% empty %}
+    <p>Nenhuma dica cadastrada.</p>
+{% endfor %}
+{% endblock %}

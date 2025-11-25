@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load bootstrap5 %}
+
+{% block title %}{{ titulo }}{% endblock %}
+
+{% block content %}
+<h2>{{ titulo }}</h2>
+
+<form method="post" enctype="multipart/form-data" class="form">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <button type="submit" class="btn btn-verde">Salvar Planta</button>
+    <a href="{% url 'listar_plantas' %}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

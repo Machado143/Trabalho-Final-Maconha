@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Catálogo de Plantas{% endblock %}
+
+{% block content %}
+<h2>🌱 Catálogo de Plantas</h2>
+
+{% if user.is_authenticated %}
+    <a href="{% url 'criar_planta' %}" class="btn btn-verde mb-3">+ Nova Planta</a>
+{% endif %}
+
+<div class="row">
+    {% for planta in plantas %}
+        <div class="col-md-4 mb-4">
+            <div class="card card-planta h-100">
+                {% if planta.imagem %}
+                    <img src="{{ planta.imagem.url }}" class="card-img-top" style="height: 200px; object-fit: cover;">
+                {% else %}
+                    <img src="{% static 'images/default-planta.jpg' %}" class="card-img-top" style="height: 200px; object-fit: cover;">
+                {% endif %}
+                
+                <div class="card-body">
+                    <h5 class="card-title">{{ planta.nome }}</h5>
+                    <p class="card-text">
+                        <strong>Espécie:</strong> {{ planta.especie }}<br>
+                        <strong>Dificuldade:</strong> {{ planta.get_dificuldade_display }}<br>
+                        <strong>Autor:</strong> {{ planta.autor.username }}
+                    </p>
+                    
+                    {% if planta.dicas.all %}
+                        <p><strong>Dicas:</strong> {{ planta.dicas.count }}</p>
+                    {% endif %}
+                    
+                    <a href="{% url 'detalhe_planta' planta.id %}" class="btn btn-verde btn-sm">Ver Detalhes</a>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <p>Nenhuma planta cadastrada ainda.</p>
+    {% endfor %}
+</div>
+{% endblock %}
