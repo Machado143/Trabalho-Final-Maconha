@@ -4,7 +4,7 @@ from .serializers import PlantaSerializer
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 class PlantaViewSet(viewsets.ModelViewSet):
-    queryset = Planta.objects.all().prefetch_related('comentarios')
+    queryset = Planta.objects.all().order_by('id').prefetch_related('comentarios')
     serializer_class = PlantaSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
     

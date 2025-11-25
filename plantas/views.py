@@ -10,7 +10,7 @@ def index(request):
     return render(request, 'plantas/index.html', {'nome': 'Jardineiro'})
 
 def listar_plantas(request):
-    plantas = Planta.objects.all().prefetch_related('comentarios')
+    plantas = Planta.objects.all().order_by('id').prefetch_related('comentarios')
     return render(request, 'plantas/lista_plantas.html', {'plantas': plantas})
 
 def detalhe_planta(request, pk):
