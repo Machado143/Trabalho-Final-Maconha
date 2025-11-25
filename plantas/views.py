@@ -17,6 +17,8 @@ def detalhe_planta(request, pk):
     planta = get_object_or_404(Planta.objects.prefetch_related('comentarios'), pk=pk)
     return render(request, 'plantas/detalhe_planta.html', {'planta': planta})
 
+# CORRIGIR: plantas/views.py
+
 @login_required
 def criar_planta(request):
     if request.method == 'POST':
@@ -30,7 +32,12 @@ def criar_planta(request):
     else:
         form = PlantaForm()
     
-    return render(request, 'plantas/form_planta.html', {'form': form, 'titulo': 'Nova Planta'})
+    # ADICIONADO: passar planta como None quando criando
+    return render(request, 'plantas/form_planta.html', {
+        'form': form, 
+        'titulo': 'Nova Planta',
+        'planta': None  # ← ADICIONAR ISTO
+    })
 
 @login_required
 def editar_planta(request, pk):
@@ -44,8 +51,12 @@ def editar_planta(request, pk):
     else:
         form = PlantaForm(instance=planta)
     
-    return render(request, 'plantas/form_planta.html', {'form': form, 'titulo': 'Editar Planta'})
-
+    # JÁ passa planta normalmente
+    return render(request, 'plantas/form_planta.html', {
+        'form': form, 
+        'titulo': 'Editar Planta',
+        'planta': planta  # ← JÁ EXISTE
+    })
 @login_required
 def excluir_planta(request, pk):
     planta = get_object_or_404(Planta, pk=pk, autor=request.user)

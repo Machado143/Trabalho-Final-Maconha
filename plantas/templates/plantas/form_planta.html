@@ -6,10 +6,17 @@
 {% block content %}
 <h2>{{ titulo }}</h2>
 
-<form method="post" class="form">
+<form method="post" class="form" enctype="multipart/form-data">
     {% csrf_token %}
     {% bootstrap_form form %}
-    <button type="submit" class="btn btn-verde">Publicar Comentário</button>
-    <a href="{% url 'detalhe_planta' planta.pk %}" class="btn btn-secondary">Cancelar</a>
+    <button type="submit" class="btn btn-verde">Publicar Planta</button>
+    
+    {% if planta %}
+        <!-- Se estiver editando, mostra botão de cancelar para a planta -->
+        <a href="{% url 'detalhe_planta' planta.pk %}" class="btn btn-secondary">Cancelar</a>
+    {% else %}
+        <!-- Se estiver criando, volta para a lista -->
+        <a href="{% url 'listar_plantas' %}" class="btn btn-secondary">Cancelar</a>
+    {% endif %}
 </form>
 {% endblock %}
