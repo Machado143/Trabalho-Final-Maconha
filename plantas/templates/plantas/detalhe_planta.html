@@ -9,7 +9,7 @@
         {% if planta.imagem %}
             <img src="{{ planta.imagem.url }}" class="img-fluid rounded">
         {% else %}
-            <img src="{% static 'images/default-planta.jpg' %}" class="img-fluid rounded">
+            <img src="https://via.placeholder.com/600x400/4CAF50/FFFFFF?text=Sem+Imagem" class="img-fluid rounded">
         {% endif %}
     </div>
     <div class="col-md-6">
@@ -29,15 +29,25 @@
 </div>
 
 <hr>
-<h3>📝 Dicas de Cultivo</h3>
-{% for dica in planta.dicas.all %}
-    <div class="card mb-2">
+<h3>💬 Comentários da Comunidade</h3>
+
+{% if user.is_authenticated %}
+    <a href="{% url 'criar_comentario' planta.pk %}" class="btn btn-success mb-3">+ Deixar um Comentário</a>
+{% else %}
+    <p class="text-muted">💡 <a href="{% url 'login' %}">Faça login</a> para comentar.</p>
+{% endif %}
+
+{% for comentario in planta.comentarios.all %}
+    <div class="card mb-3">
+        <div class="card-header d-flex justify-content-between">
+            <strong>{{ comentario.autor.username }}</strong>
+            <small class="text-muted">{{ comentario.criado_em|date:"d/m/Y H:i" }}</small>
+        </div>
         <div class="card-body">
-            <h5>{{ dica.titulo }} <span class="badge bg-success">{{ dica.get_estacao_display }}</span></h5>
-            <p>{{ dica.conteudo }}</p>
+            {{ comentario.conteudo }}
         </div>
     </div>
 {% empty %}
-    <p>Nenhuma dica cadastrada.</p>
+    <p class="text-muted">Nenhum comentário ainda. Seja o primeiro!</p>
 {% endfor %}
 {% endblock %}

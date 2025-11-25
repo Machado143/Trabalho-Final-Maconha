@@ -1,5 +1,5 @@
 from django import forms
-from .models import Planta
+from .models import Planta, Comentario
 
 class PlantaForm(forms.ModelForm):
     class Meta:
@@ -19,4 +19,19 @@ class PlantaForm(forms.ModelForm):
         nome = self.cleaned_data.get('nome')
         if len(nome) < 3:
             raise forms.ValidationError("O nome deve ter pelo menos 3 caracteres.")
-        return nome.upper()  # Exemplo de transformação
+        return nome.upper()
+
+class ComentarioForm(forms.ModelForm):
+    class Meta:
+        model = Comentario
+        fields = ['conteudo']
+        widgets = {
+            'conteudo': forms.Textarea(attrs={
+                'class': 'form-control', 
+                'rows': 4,
+                'placeholder': 'Compartilhe sua experiência com esta planta...'
+            }),
+        }
+        labels = {
+            'conteudo': 'Seu Comentário'
+        }

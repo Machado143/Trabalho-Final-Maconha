@@ -10,9 +10,7 @@ class Categoria(models.Model):
 
 class Planta(models.Model):
     DIFICULDADE_CHOICES = [
-        ('F', 'Fácil'),
-        ('M', 'Média'),
-        ('D', 'Difícil'),
+        ('F', 'Fácil'), ('M', 'Média'), ('D', 'Difícil'),
     ]
     
     nome = models.CharField(max_length=100)
@@ -28,23 +26,17 @@ class Planta(models.Model):
 
     def __str__(self):
         return f"{self.nome} ({self.especie})"
-    
-    def total_dicas(self):
-        return self.dicas.count()
 
-class DicaCultivo(models.Model):
-    ESTACAO_CHOICES = [
-        ('PRI', 'Primavera'),
-        ('VER', 'Verão'),
-        ('OUT', 'Outono'),
-        ('INV', 'Inverno'),
-    ]
-    
-    planta = models.ForeignKey(Planta, on_delete=models.CASCADE, related_name='dicas')
-    titulo = models.CharField(max_length=100)
-    conteudo = models.TextField()
-    estacao = models.CharField(max_length=3, choices=ESTACAO_CHOICES, verbose_name='Estação')
+class Comentario(models.Model):
+    planta = models.ForeignKey(Planta, on_delete=models.CASCADE, related_name='comentarios')
+    autor = models.ForeignKey(User, on_delete=models.CASCADE)
+    conteudo = models.TextField(verbose_name='Comentário')
     criado_em = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        ordering = ['-criado_em']
+        verbose_name = 'Comentário'
+        verbose_name_plural = 'Comentários'
+
     def __str__(self):
-        return f"{self.titulo} - {self.planta.nome}"
+        return f"Comentário de {self.autor.username} em {self.planta.nome}"

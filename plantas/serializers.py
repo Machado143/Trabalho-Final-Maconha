@@ -1,16 +1,18 @@
 from rest_framework import serializers
-from .models import Planta, DicaCultivo
+from .models import Planta, Comentario
 
-class DicaCultivoSerializer(serializers.ModelSerializer):
+class ComentarioSerializer(serializers.ModelSerializer):
+    autor_nome = serializers.CharField(source='autor.username', read_only=True)
+    
     class Meta:
-        model = DicaCultivo
-        fields = '__all__'
+        model = Comentario
+        fields = ['id', 'autor', 'autor_nome', 'conteudo', 'criado_em']
 
 class PlantaSerializer(serializers.ModelSerializer):
-    dicas = DicaCultivoSerializer(many=True, read_only=True)
+    comentarios = ComentarioSerializer(many=True, read_only=True)
     autor_nome = serializers.CharField(source='autor.username', read_only=True)
     
     class Meta:
         model = Planta
         fields = ['id', 'nome', 'especie', 'dificuldade', 'necessidade_agua', 
-                 'necessidade_luz', 'descricao', 'imagem', 'autor_nome', 'criado_em', 'dicas']
+                 'necessidade_luz', 'descricao', 'imagem', 'autor_nome', 'criado_em', 'comentarios']

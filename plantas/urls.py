@@ -15,7 +15,10 @@ urlpatterns = [
     path('plantas/<int:pk>/editar/', views.editar_planta, name='editar_planta'),
     path('plantas/<int:pk>/excluir/', views.excluir_planta, name='excluir_planta'),
     
-    # URLs de autenticação (movidas daqui do projeto principal)
+    # URLs de comentários
+    path('plantas/<int:planta_pk>/comentarios/criar/', views.criar_comentario, name='criar_comentario'),
+    
+    # URLs de autenticação
     path('login/', auth_views.LoginView.as_view(), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('signup/', views.signup, name='signup'),

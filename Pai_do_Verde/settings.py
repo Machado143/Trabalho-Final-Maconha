@@ -141,3 +141,10 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000",
     "http://127.0.0.1:8000",
 ]
+
+
+LOGIN_REDIRECT_URL = '/'  # Vai para home após login
+LOGOUT_REDIRECT_URL = '/'  # Vai para home após logout
+
+# Mensagens
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'

@@ -5,6 +5,13 @@
 
 {% block content %}
 <h2>🔐 Login</h2>
+
+{% if form.errors %}
+    <div class="alert alert-danger">
+        <strong>Erro!</strong> Usuário ou senha inválidos.
+    </div>
+{% endif %}
+
 <form method="post" class="form">
     {% csrf_token %}
     {% bootstrap_form form %}
@@ -12,4 +19,3 @@
 </form>
 <p class="mt-3">Não tem conta? <a href="{% url 'signup' %}">Cadastre-se</a></p>
 {% endblock %}
-

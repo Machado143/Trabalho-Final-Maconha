@@ -1,16 +1,11 @@
 from django.contrib import admin
-from .models import Planta, DicaCultivo, Categoria
-
-class DicaCultivoInline(admin.TabularInline):
-    model = DicaCultivo
-    extra = 1
+from .models import Planta, Comentario, Categoria
 
 @admin.register(Planta)
 class PlantaAdmin(admin.ModelAdmin):
-    list_display = ('nome', 'especie', 'dificuldade', 'autor', 'criado_em', 'total_dicas')
+    list_display = ('nome', 'especie', 'dificuldade', 'autor', 'criado_em')
     list_filter = ('dificuldade', 'criado_em')
     search_fields = ('nome', 'especie')
-    inlines = [DicaCultivoInline]
     
     def get_queryset(self, request):
         qs = super().get_queryset(request)
@@ -18,10 +13,15 @@ class PlantaAdmin(admin.ModelAdmin):
             return qs
         return qs.filter(autor=request.user)
 
-@admin.register(DicaCultivo)
-class DicaCultivoAdmin(admin.ModelAdmin):
-    list_display = ('titulo', 'planta', 'estacao', 'criado_em')
-    list_filter = ('estacao', 'criado_em')
+@admin.register(Comentario)
+class ComentarioAdmin(admin.ModelAdmin):
+    list_display = ('planta', 'autor', 'criado_em', 'conteudo_resumido')
+    list_filter = ('criado_em', 'planta')
+    search_fields = ('conteudo', 'autor__username', 'planta__nome')
+    
+    def conteudo_resumido(self, obj):
+        return obj.conteudo[:50] + "..."
+    conteudo_resumido.short_description = 'Comentário'
 
 @admin.register(Categoria)
 class CategoriaAdmin(admin.ModelAdmin):
