@@ -1,5 +1,5 @@
 """
-ASGI config for Pai_do_Verde project.
+ASGI config for pai_do_verde project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Pai_do_Verde.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'pai_do_verde.settings')
 
 application = get_asgi_application()

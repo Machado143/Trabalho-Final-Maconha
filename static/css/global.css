@@ -1,0 +1,35 @@
+:root {
+    --verde-primario: #2d6a4f;
+    --verde-secundario: #52b788;
+    --fundo: #f8f9fa;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--fundo);
+    color: #333;
+}
+
+.navbar {
+    background-color: var(--verde-primario);
+    padding: 1rem;
+    color: white;
+}
+
+.card-planta {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 1rem 0;
+    background: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.btn-verde {
+    background-color: var(--verde-secundario);
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}

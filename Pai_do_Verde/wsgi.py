@@ -1,5 +1,5 @@
 """
-WSGI config for Pai_do_Verde project.
+WSGI config for pai_do_verde project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Pai_do_Verde.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'pai_do_verde.settings')
 
 application = get_wsgi_application()
