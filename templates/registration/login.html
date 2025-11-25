@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load bootstrap5 %}
+{% load django_bootstrap5 %}
 
 {% block title %}Login{% endblock %}
 
@@ -13,17 +13,3 @@
 <p class="mt-3">Não tem conta? <a href="{% url 'signup' %}">Cadastre-se</a></p>
 {% endblock %}
 
-<!-- templates/registration/signup.html -->
-{% extends "base.html" %}
-{% load bootstrap5 %}
-
-{% block title %}Cadastro{% endblock %}
-
-{% block content %}
-<h2>🌱 Cadastro de Usuário</h2>
-<form method="post" class="form">
-    {% csrf_token %}
-    {% bootstrap_form form %}
-    <button type="submit" class="btn btn-verde">Cadastrar</button>
-</form>
-{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+
+{% block title %}Cadastro{% endblock %}
+
+{% block content %}
+<h2>🌱 Cadastro de Usuário</h2>
+<form method="post" class="form">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <button type="submit" class="btn btn-verde">Cadastrar</button>
+</form>
+{% endblock %}

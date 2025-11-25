@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'plantas',
+    'django_bootstrap5', 
     'rest_framework',
     'corsheaders',
 ]
