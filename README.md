@@ -1,51 +1,121 @@
-# 🌿 Pai do Verde
+# 🌿 Trabalho Final - Sistema de Plantas
 
-Um site comunitário para jardineiros compartilharem plantas, dicas de cultivo e experiências. Feito com Django + REST API + Vue.js.
+> Uma rede social colaborativa para amantes de jardinagem compartilharem plantas, experiências de cultivo e dicas com a comunidade.
 
----
-
-## 🎯 O que é?
-
-Um sistema web onde você pode:
-- ✅ Cadastrar suas plantas
-- ✅ Ver plantas cadastradas por outros usuários
-- ✅ Deixar comentários e dicas
-- ✅ Acessar via API REST
+![Django](https://img.shields.io/badge/Django-5.2-092E20?style=for-the-badge&logo=django&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.9+-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white)
+![REST](https://img.shields.io/badge/REST_API-Django_REST-ff1709?style=for-the-badge&logo=django&logoColor=white)
 
 ---
 
-## 📋 Requisitos
+## 📋 Índice
 
-Você precisa ter instalado:
-- **Python 3.9+** ([Download](https://www.python.org/downloads/))
-- **Git** (opcional, mas recomendado)
+- [Sobre o Projeto](#-sobre-o-projeto)
+- [Funcionalidades](#-funcionalidades)
+- [Tecnologias Utilizadas](#-tecnologias-utilizadas)
+- [Pré-requisitos](#-pré-requisitos)
+- [Instalação](#-instalação)
+- [Como Usar](#-como-usar)
+- [API REST](#-api-rest)
+- [Estrutura do Projeto](#-estrutura-do-projeto)
+- [Testes](#-testes)
+- [Contribuindo](#-contribuindo)
+- [Licença](#-licença)
 
 ---
 
-## 🚀 Instalação Passo a Passo
+## 🌱 Sobre o Projeto
 
-### 1️⃣ Clone ou baixe o projeto
+**Sistema de Plantas** é uma aplicação web fullstack desenvolvida com Django que permite aos usuários:
+
+- 📸 Cadastrar e compartilhar suas plantas com fotos
+- 💬 Comentar e trocar experiências sobre cultivo
+- 🔐 Gerenciar suas próprias publicações (CRUD completo)
+- 🌐 Acessar dados via API REST para integração externa
+- 👥 Criar uma comunidade de jardineiros
+
+Este projeto foi desenvolvido como trabalho final da disciplina de **Desenvolvimento Web** e implementa todos os conceitos de autenticação, autorização, CRUD e boas práticas de desenvolvimento Django.
+
+---
+
+## ✨ Funcionalidades
+
+### 🔒 Sistema de Autenticação
+- ✅ Cadastro de novos usuários
+- ✅ Login/Logout seguro
+- ✅ Controle de permissões (usuários só editam/excluem suas próprias plantas)
+
+### 🌿 Gerenciamento de Plantas (CRUD)
+- ✅ **Criar:** Cadastre plantas com nome, espécie, dificuldade, necessidades e foto
+- ✅ **Visualizar:** Explore o catálogo completo de plantas da comunidade
+- ✅ **Editar:** Atualize informações das suas plantas
+- ✅ **Excluir:** Remova plantas que você cadastrou
+
+### 💬 Sistema de Comentários
+- ✅ Deixe comentários com dicas e experiências
+- ✅ Visualize feedback da comunidade em tempo real
+
+### 🔌 API REST
+- ✅ Endpoints completos para integração externa
+- ✅ Paginação automática
+- ✅ Suporte a CORS para aplicações frontend
+
+---
+
+## 🛠 Tecnologias Utilizadas
+
+### Backend
+- **Django 5.2** - Framework web Python
+- **Django REST Framework** - API RESTful
+- **Pillow** - Processamento de imagens
+- **SQLite** - Banco de dados (desenvolvimento)
+
+### Frontend
+- **Bootstrap 5.3** - Framework CSS responsivo
+- **django-bootstrap5** - Integração Django + Bootstrap
+- **Vue.js 3** - Frontend da API (opcional)
+
+### Ferramentas
+- **pytest** - Framework de testes
+- **CORS Headers** - Suporte a requisições cross-origin
+
+---
+
+## 📦 Pré-requisitos
+
+Antes de começar, certifique-se de ter instalado:
+
+- **Python 3.9+** → [Download](https://www.python.org/downloads/)
+- **pip** (geralmente já vem com Python)
+- **Git** → [Download](https://git-scm.com/)
+
+---
+
+## 🚀 Instalação
+
+### 1️⃣ Clone o repositório
 
 ```bash
-git clone https://github.com/seu-usuario/Pai_do_Verde.git
-cd Pai_do_Verde
+git clone https://github.com/seu-usuario/trabalho-final.git
+cd trabalho-final
 ```
 
 ### 2️⃣ Crie um ambiente virtual
 
-**No Windows (PowerShell):**
-```bash
-python -m venv venv
-.\venv\Scripts\Activate
+**Windows (PowerShell):**
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate
 ```
 
-**No Mac/Linux:**
+**macOS/Linux:**
 ```bash
-python3 -m venv venv
-source venv/bin/activate
+python3 -m venv .venv
+source .venv/bin/activate
 ```
 
-Após rodar esses comandos, você verá `(venv)` no começo da linha do terminal.
+Você verá `(.venv)` no início da linha do terminal.
 
 ### 3️⃣ Instale as dependências
 
@@ -53,24 +123,13 @@ Após rodar esses comandos, você verá `(venv)` no começo da linha do terminal
 pip install -r requirements.txt
 ```
 
-Isso vai instalar:
-- Django
-- Django REST Framework
-- Pillow (para fotos)
-- Bootstrap 5
-- CORS (para API)
-
----
-
-## 🔧 Configuração do Banco de Dados
-
-### 1️⃣ Crie as tabelas
+### 4️⃣ Configure o banco de dados
 
 ```bash
 python manage.py migrate
 ```
 
-### 2️⃣ Crie um usuário admin (super usuário)
+### 5️⃣ Crie um superusuário (admin)
 
 ```bash
 python manage.py createsuperuser
@@ -78,257 +137,287 @@ python manage.py createsuperuser
 
 Responda as perguntas:
 ```
-Nome de usuário: seu_nome
-Email: seu_email@example.com
-Senha: uma_senha_segura
+Username: admin
+Email: admin@example.com
+Password: ********
 ```
 
----
-
-## ▶️ Rodando o Servidor
+### 6️⃣ Inicie o servidor
 
 ```bash
 python manage.py runserver
 ```
 
-Pronto! Abra seu navegador e acesse:
-
-- **Site principal:** http://127.0.0.1:8000
-- **Painel admin:** http://127.0.0.1:8000/admin
-
-**Login no admin:**
-- Usuário: o que você criou no `createsuperuser`
-- Senha: a senha que você criou
+✅ **Pronto!** Acesse: http://127.0.0.1:8000
 
 ---
 
-## 👤 Criar Usuários para Teste
+## 💻 Como Usar
 
-### Opção 1: Via Painel Admin
-1. Acesse http://127.0.0.1:8000/admin
-2. Clique em "Users" → "Add User"
-3. Preencha os dados
-4. Clique em "Save"
+### 🌐 Acessando a Aplicação
 
-### Opção 2: Via Site
-1. Clique em "Cadastrar" na página inicial
-2. Escolha um nome de usuário e senha
-3. Pronto!
+| Área | URL | Descrição |
+|------|-----|-----------|
+| **Home** | http://127.0.0.1:8000 | Página inicial |
+| **Catálogo** | http://127.0.0.1:8000/plantas/ | Lista de plantas |
+| **Admin** | http://127.0.0.1:8000/admin | Painel administrativo |
+| **API** | http://127.0.0.1:8000/api/plantas/ | Endpoint REST |
 
----
+### 📝 Cadastrando uma Planta
 
-## 📱 Como Usar o Site
-
-### Listar Plantas
-1. Acesse http://127.0.0.1:8000/plantas/
-2. Veja todas as plantas cadastradas
-3. Clique em "Ver Detalhes" para mais informações
-
-### Cadastrar uma Nova Planta
-1. Faça login (canto superior direito)
-2. Clique em "+ Nova Planta"
-3. Preencha:
+1. Faça login na aplicação
+2. Clique em **"+ Nova Planta"**
+3. Preencha os campos:
    - Nome da planta
    - Espécie científica
-   - Nível de dificuldade (Fácil, Médio, Difícil)
-   - Necessidade de água (ex: "Pouca", "Moderada")
-   - Necessidade de luz (ex: "Sol pleno", "Sombra")
-   - Descrição
+   - Dificuldade (Fácil/Média/Difícil)
+   - Necessidades de água e luz
+   - Descrição detalhada
    - Foto (opcional)
-4. Clique em "Publicar"
+4. Clique em **"Publicar Planta"**
 
-### Editar ou Excluir Planta
-1. Vá aos detalhes da planta que você criou
-2. Se for sua planta, aparecem botões "Editar" e "Excluir"
-3. Clique no botão desejado
+### ✏️ Editando/Excluindo
 
-### Deixar Comentários
-1. Na página de detalhes de uma planta
-2. Clique em "+ Deixar um Comentário"
+- Acesse os detalhes da planta
+- Botões de **Editar** e **Excluir** aparecem apenas para o autor
+- Clique no botão desejado
+
+### 💬 Comentando
+
+1. Acesse os detalhes de qualquer planta
+2. Clique em **"+ Deixar um Comentário"**
 3. Escreva sua experiência
-4. Clique em "Publicar Comentário"
+4. Clique em **"Publicar Comentário"**
 
 ---
 
-## 🔗 API REST
+## 🔌 API REST
 
-Se quiser usar a API em aplicações externas:
-
-### Listar todas as plantas
+### Listar Todas as Plantas
 
 ```bash
-curl http://127.0.0.1:8000/api/plantas/
+GET /api/plantas/
 ```
 
-**Resposta (JSON):**
+**Resposta:**
 ```json
 {
   "count": 5,
   "next": null,
+  "previous": null,
   "results": [
     {
       "id": 1,
-      "nome": "Aloe Vera",
+      "nome": "ALOE VERA",
       "especie": "Aloe barbadensis",
       "dificuldade": "F",
+      "necessidade_agua": "Baixa",
+      "necessidade_luz": "Sol pleno",
+      "descricao": "Planta medicinal resistente",
+      "imagem": "http://127.0.0.1:8000/media/plantas/aloe.jpg",
       "autor_nome": "jardineiro1",
-      "comentarios": [...]
+      "criado_em": "2025-12-01T10:30:00Z",
+      "comentarios": [
+        {
+          "id": 1,
+          "autor_nome": "usuario2",
+          "conteudo": "Adorei! Cresce muito rápido.",
+          "criado_em": "2025-12-01T14:20:00Z"
+        }
+      ]
     }
   ]
 }
 ```
 
-### Detalhes de uma planta específica
+### Detalhes de uma Planta
 
 ```bash
-curl http://127.0.0.1:8000/api/plantas/1/
+GET /api/plantas/{id}/
+```
+
+### Criar Nova Planta (Requer Autenticação)
+
+```bash
+POST /api/plantas/
+Content-Type: application/json
+
+{
+  "nome": "Cacto",
+  "especie": "Cactaceae",
+  "dificuldade": "F",
+  "necessidade_agua": "Muito baixa",
+  "necessidade_luz": "Sol direto",
+  "descricao": "Planta desértica"
+}
+```
+
+### Frontend de Exemplo (Vue.js)
+
+Abra `api_frontend/index.html` no navegador para ver a API em ação com Vue.js.
+
+---
+
+## 📁 Estrutura do Projeto
+
+```
+trabalho-final-maconha/
+├── 📂 trabalho_final/            # Configurações do projeto
+│   ├── settings.py               # Configurações Django
+│   ├── urls.py                   # Rotas principais
+│   ├── wsgi.py                   # Deploy WSGI
+│   └── asgi.py                   # Deploy ASGI
+│
+├── 📂 plantas/                   # App principal
+│   ├── models.py                 # Modelos (Planta, Comentário)
+│   ├── views.py                  # Views do frontend
+│   ├── viewsets.py               # ViewSets da API
+│   ├── serializers.py            # Serializers REST
+│   ├── forms.py                  # Formulários Django
+│   ├── urls.py                   # Rotas do app
+│   ├── admin.py                  # Painel admin
+│   ├── tests.py                  # Testes unitários
+│   ├── 📂 templates/             # Templates HTML
+│   └── 📂 migrations/            # Migrações do banco
+│
+├── 📂 templates/                 # Templates globais
+│   ├── base.html                 # Layout base
+│   └── 📂 registration/          # Templates de auth
+│
+├── 📂 static/                    # Arquivos estáticos
+│   └── 📂 css/                   # Estilos customizados
+│
+├── 📂 media/                     # Uploads de usuários
+│   └── 📂 plantas/               # Fotos das plantas
+│
+├── 📂 api_frontend/              # Frontend Vue.js (demo)
+│   ├── index.html
+│   └── script.js
+│
+├── manage.py                     # CLI do Django
+├── requirements.txt              # Dependências Python
+├── pytest.ini                    # Configuração de testes
+├── db.sqlite3                    # Banco de dados
+└── README.md                     # Este arquivo
 ```
 
 ---
 
-## 🧪 Rodando Testes
+## 🧪 Testes
+
+### Executar todos os testes
 
 ```bash
 python manage.py test
 ```
 
-Ou com mais detalhes:
+### Testes com pytest (mais verboso)
 
 ```bash
-python -m pytest -v
+pip install pytest pytest-django
+pytest -v
 ```
+
+### Cobertura dos Testes
+
+O projeto inclui testes para:
+- ✅ Modelos (criação, validação, relacionamentos)
+- ✅ Views (listagem, criação, edição, exclusão)
+- ✅ Formulários (validação customizada)
+- ✅ API REST (endpoints, permissões)
+- ✅ Autenticação (login, logout, permissões)
 
 ---
 
-## 📂 Estrutura do Projeto
+## 🤝 Contribuindo
 
-```
-Pai_do_Verde/
-├── Pai_do_Verde/          # Configurações do projeto
-│   ├── settings.py        # Configurações (banco, apps, etc)
-│   ├── urls.py            # Rotas principais
-│   └── wsgi.py
-├── plantas/               # Aplicação principal
-│   ├── models.py          # Banco de dados (Planta, Comentario)
-│   ├── views.py           # Lógica das páginas
-│   ├── forms.py           # Formulários
-│   ├── serializers.py     # API REST
-│   ├── templates/         # HTML
-│   └── migrations/        # Histórico do banco de dados
-├── templates/             # HTML globais (login, base)
-├── static/                # CSS, JS, imagens
-├── api_frontend/          # Frontend Vue.js para API
-├── manage.py              # Comando principal do Django
-└── requirements.txt       # Dependências Python
-```
+Contribuições são bem-vindas! Siga os passos:
+
+1. Fork o projeto
+2. Crie uma branch para sua feature (`git checkout -b feature/NovaFuncionalidade`)
+3. Commit suas mudanças (`git commit -m 'Adiciona nova funcionalidade'`)
+4. Push para a branch (`git push origin feature/NovaFuncionalidade`)
+5. Abra um Pull Request
+
+### Padrões de Código
+
+- Siga a [PEP 8](https://pep8.org/) para código Python
+- Use nomes descritivos para variáveis e funções
+- Adicione docstrings em funções complexas
+- Escreva testes para novas funcionalidades
 
 ---
 
 ## 🐛 Problemas Comuns
 
-### ❌ "ModuleNotFoundError: No module named 'django'"
-**Solução:** Você esqueceu de ativar o ambiente virtual. Execute:
+### Erro: "ModuleNotFoundError: No module named 'django'"
+
+**Solução:** Ative o ambiente virtual
 ```bash
 # Windows
-.\venv\Scripts\Activate
+.\.venv\Scripts\Activate
+
 # Mac/Linux
-source venv/bin/activate
+source .venv/bin/activate
 ```
 
-### ❌ "Port 8000 is already in use"
-**Solução:** Outra aplicação está usando a porta 8000. Use:
+### Erro: "Port 8000 is already in use"
+
+**Solução:** Use outra porta
 ```bash
 python manage.py runserver 8001
 ```
 
-### ❌ Fotos não aparecem
-**Solução:** Certifique-se de que:
-1. A pasta `media/` existe
-2. Você está no modo `DEBUG = True` em `settings.py`
+### Imagens não aparecem
 
-### ❌ CSS não aparece
-**Solução:** Execute:
+**Solução:** Verifique se `DEBUG = True` em `settings.py` e se a pasta `media/` existe.
+
+### CSS não carrega
+
+**Solução:** Execute
 ```bash
 python manage.py collectstatic
 ```
 
 ---
 
-## 📝 Comandos Úteis
-
-| Comando | O que faz |
-|---------|-----------|
-| `python manage.py runserver` | Inicia o servidor |
-| `python manage.py migrate` | Aplica mudanças no banco |
-| `python manage.py makemigrations` | Prepara mudanças no banco |
-| `python manage.py createsuperuser` | Cria admin |
-| `python manage.py test` | Roda testes |
-| `python manage.py shell` | Terminal Python interativo |
-
----
-
 ## 🔐 Segurança para Produção
 
-⚠️ **NÃO coloque esse projeto em produção assim!**
+⚠️ **Antes de fazer deploy:**
 
-Antes de subir para a internet:
-1. Mude `DEBUG = False` em `settings.py`
-2. Gere uma nova `SECRET_KEY` aleatória
-3. Configure `ALLOWED_HOSTS`
-4. Use um banco de dados real (PostgreSQL)
-5. Configure variáveis de ambiente
-
----
-
-## 👨‍💻 Desenvolvendo
-
-### Criar uma nova funcionalidade
-
-1. Faça as mudanças no código
-2. Se alterou modelos, execute:
-   ```bash
-   python manage.py makemigrations
-   python manage.py migrate
-   ```
-3. Teste tudo:
-   ```bash
-   python manage.py test
-   ```
-
-### Adicionar dependências
-
-1. Instale com pip:
-   ```bash
-   pip install nome_do_pacote
-   ```
-2. Atualize `requirements.txt`:
-   ```bash
-   pip freeze > requirements.txt
-   ```
+1. **Altere `SECRET_KEY`** em `settings.py`
+2. **Defina `DEBUG = False`**
+3. **Configure `ALLOWED_HOSTS`**
+```python
+ALLOWED_HOSTS = ['seudominio.com', 'www.seudominio.com']
+```
+4. **Use banco de dados PostgreSQL**
+5. **Configure variáveis de ambiente** para credenciais
+6. **Use serviço de arquivos** (AWS S3, Cloudinary) para mídia
+7. **Configure HTTPS**
 
 ---
 
-## 📚 Referências
+## 📚 Referências e Documentação
 
-- [Documentação Django](https://docs.djangoproject.com/)
+- [Django Documentation](https://docs.djangoproject.com/)
 - [Django REST Framework](https://www.django-rest-framework.org/)
-- [Bootstrap 5](https://getbootstrap.com/)
-- [Vue.js 3](https://vuejs.org/)
+- [Bootstrap 5 Docs](https://getbootstrap.com/docs/5.3/)
+- [PEP 8 Style Guide](https://pep8.org/)
 
 ---
 
-## 📄 Licença
+## 📝 Comandos Úteis
 
-Este projeto está livre para usar e modificar.
+| Comando | Descrição |
+|---------|-----------|
+| `python manage.py runserver` | Inicia servidor de desenvolvimento |
+| `python manage.py migrate` | Aplica migrações no banco |
+| `python manage.py makemigrations` | Cria novas migrações |
+| `python manage.py createsuperuser` | Cria usuário admin |
+| `python manage.py test` | Executa testes |
+| `python manage.py shell` | Abre shell interativo do Django |
+| `python manage.py collectstatic` | Coleta arquivos estáticos |
 
----
 
-## ❓ Dúvidas?
 
-Se tiver problemas, verifique:
-1. Se o `venv` está ativado
-2. Se executou `migrate` e `createsuperuser`
-3. Se está rodando `python manage.py runserver`
-4. Se a porta 8000 não está ocupada
-
-**Boa sorte, jardineiro(a)! 🌱**
