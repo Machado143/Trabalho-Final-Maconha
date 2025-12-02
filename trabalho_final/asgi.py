@@ -11,6 +11,7 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'pai_do_verde.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'trabalho_final.settings')
+
 
 application = get_asgi_application()

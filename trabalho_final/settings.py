@@ -54,7 +54,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'pai_do_verde.urls'
+ROOT_URLCONF = 'trabalho_final.urls'
 
 TEMPLATES = [
     {
@@ -72,7 +72,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'pai_do_verde.wsgi.application'
+WSGI_APPLICATION = 'trabalho_final.wsgi.application'
 
 
 # Database
