@@ -2,6 +2,8 @@ from django.test import TestCase, Client
 from django.contrib.auth.models import User
 from django.urls import reverse
 from .models import Planta, Comentario, Categoria
+from .models import LikePlanta
+from django.utils import timezone
 
 class ModelTestCase(TestCase):
     def setUp(self):
@@ -154,3 +156,45 @@ class APITestCase(TestCase):
 
     # REMOVIDO: Teste que requeria Token API (não configurado no projeto)
     # def test_api_cria_planta_autenticado(self):
+
+class PerfilTestCase(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(username='testuser', password='testpass')
+        self.client.login(username='testuser', password='testpass')
+    
+    def test_perfil_criado_automaticamente(self):
+        """Testa se perfil é criado ao criar usuário"""
+        self.assertTrue(hasattr(self.user, 'profile'))
+    
+    def test_editar_perfil(self):
+        """Testa edição de perfil"""
+        response = self.client.post(reverse('editar_perfil'), {
+            'bio': 'Novo jardineiro',
+            'nivel_experiencia': 'INICIANTE'
+        })
+        self.assertEqual(response.status_code, 302)
+        self.user.profile.refresh_from_db()
+        self.assertEqual(self.user.profile.bio, 'Novo jardineiro')
+
+class LikeTestCase(TestCase):
+    def setUp(self):
+        self.user1 = User.objects.create_user(username='user1', password='pass1')
+        self.user2 = User.objects.create_user(username='user2', password='pass2')
+        self.planta = Planta.objects.create(
+            nome="Teste", especie="Teste", dificuldade='F',
+            necessidade_agua="Teste", necessidade_luz="Teste",
+            descricao="Teste", autor=self.user1
+        )
+        self.client.login(username='user2', password='pass2')
+    
+    def test_like_e_unlike(self):
+        """Testa like e unlike"""
+        # Like
+        response = self.client.post(reverse('toggle_like', args=[self.planta.pk]))
+        self.assertEqual(response.status_code, 302)
+        self.assertTrue(LikePlanta.objects.filter(planta=self.planta, usuario=self.user2).exists())
+        
+        # Unlike
+        response = self.client.post(reverse('toggle_like', args=[self.planta.pk]))
+        self.assertEqual(response.status_code, 302)
+        self.assertFalse(LikePlanta.objects.filter(planta=self.planta, usuario=self.user2).exists())

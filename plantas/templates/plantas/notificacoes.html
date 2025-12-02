@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Minhas Notificações{% endblock %}
+
+{% block content %}
+<h2>📬 Minhas Notificações</h2>
+
+{% if notificacoes %}
+    <div class="list-group">
+        {% for notificacao in notificacoes %}
+            <div class="list-group-item {% if not notificacao.lida %}list-group-item-info{% endif %}">
+                <div class="d-flex w-100 justify-content-between">
+                    <h6 class="mb-1">{{ notificacao.mensagem }}</h6>
+                    <small>{{ notificacao.criada_em|date:"d/m/Y H:i" }}</small>
+                </div>
+                <small class="text-muted">
+                    {% if notificacao.tipo == 'LIKE' %}❤️{% elif notificacao.tipo == 'COMENTARIO' %}💬{% elif notificacao.tipo == 'SEGUIR' %}👥{% elif notificacao.tipo == 'BADGE' %}🏆{% endif %}
+                    {{ notificacao.get_tipo_display }}
+                </small>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p class="text-muted">Você não tem notificações ainda.</p>
+{% endif %}
+{% endblock %}

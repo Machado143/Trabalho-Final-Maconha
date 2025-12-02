@@ -1,0 +1,40 @@
+<div class="col-md-4 mb-4">
+    <div class="card card-planta h-100">
+        {% if planta.imagem %}
+            <img src="{{ planta.imagem.url }}" class="card-img-top" style="height: 200px; object-fit: cover;">
+        {% else %}
+            <img src="https://via.placeholder.com/600x400/4CAF50/FFFFFF?text=Sem+Imagem" class="card-img-top" style="height: 200px; object-fit: cover;">
+        {% endif %}
+        
+        <div class="card-body">
+            <h5 class="card-title">{{ planta.nome }}</h5>
+            <p class="card-text">
+                <strong>Espécie:</strong> {{ planta.especie }}<br>
+                <strong>Dificuldade:</strong> {{ planta.get_dificuldade_display }}<br>
+                <strong>Autor:</strong> <a href="{% url 'ver_perfil' planta.autor.username %}">{{ planta.autor.username }}</a>
+            </p>
+            
+            <div class="d-flex justify-content-between align-items-center">
+                <a href="{% url 'detalhe_planta' planta.id %}" class="btn btn-verde btn-sm">Ver Detalhes</a>
+                
+                {% if request.user.is_authenticated %}
+                    <div>
+                        <form method="post" action="{% url 'toggle_like' planta.pk %}" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-sm {% if request.user in planta.likes.all %}btn-success{% else %}btn-outline-success{% endif %}">
+                                ❤️ {{ planta.likes.count }}
+                            </button>
+                        </form>
+                        
+                        <form method="post" action="{% url 'toggle_favorito' planta.pk %}" class="d-inline ms-1">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-sm {% if request.user in planta.favoritado_por.all %}btn-warning{% else %}btn-outline-warning{% endif %}">
+                                ⭐
+                            </button>
+                        </form>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Perfil de {{ usuario_perfil.username }}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body text-center">
+                {% if usuario_perfil.profile.avatar %}
+                    <img src="{{ usuario_perfil.profile.avatar.url }}" class="rounded-circle mb-3" width="150" height="150" style="object-fit: cover;">
+                {% else %}
+                    <img src="https://via.placeholder.com/150/4CAF50/FFFFFF?text=Avatar" class="rounded-circle mb-3">
+                {% endif %}
+                
+                <h3>{{ usuario_perfil.username }}</h3>
+                <p class="text-muted">{{ usuario_perfil.profile.get_nivel_experiencia_display }}</p>
+                
+                {% if usuario_perfil.profile.bio %}
+                    <p>{{ usuario_perfil.profile.bio }}</p>
+                {% endif %}
+                
+                {% if usuario_perfil.profile.localizacao %}
+                    <p><small>📍 {{ usuario_perfil.profile.localizacao }}</small></p>
+                {% endif %}
+                
+                <!-- BADGES -->
+                {% if usuario_perfil.badges.all %}
+                    <div class="mt-3">
+                        <h6>Conquistas</h6>
+                        <div class="d-flex flex-wrap gap-2 justify-content-center">
+                            {% for user_badge in usuario_perfil.badges.all %}
+                                <span class="badge" style="background: linear-gradient(135deg, var(--verde-claro), var(--verde-medio));" 
+                                      title="{{ user_badge.badge.descricao }}">
+                                    {{ user_badge.badge.icone }} {{ user_badge.badge.nome }}
+                                </span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+                
+                <!-- CONTADORES -->
+                <div class="row mt-3">
+                    <div class="col-4">
+                        <strong>{{ total_postagens }}</strong><br>
+                        <small>Plantas</small>
+                    </div>
+                    <div class="col-4">
+                        <strong>{{ total_seguidores }}</strong><br>
+                        <small>Seguidores</small>
+                    </div>
+                    <div class="col-4">
+                        <strong>{{ total_seguindo }}</strong><br>
+                        <small>Seguindo</small>
+                    </div>
+                </div>
+                
+                <!-- BOTÃO SEGUIR/EDITAR -->
+                {% if request.user.is_authenticated %}
+                    {% if request.user != usuario_perfil %}
+                        <form method="post" action="{% url 'toggle_seguir' usuario_perfil.username %}" class="mt-3">
+                            {% csrf_token %}
+                            <button type="submit" class="btn {% if esta_seguindo %}btn-secondary{% else %}btn-success{% endif %} btn-sm">
+                                {% if esta_seguindo %}Deixar de Seguir{% else %}Seguir{% endif %}
+                            </button>
+                        </form>
+                    {% else %}
+                        <a href="{% url 'editar_perfil' %}" class="btn btn-warning btn-sm mt-3">Editar Perfil</a>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-8">
+        <h4>Plantas de {{ usuario_perfil.username }}</h4>
+        <hr>
+        <div class="row">
+            {% for planta in plantas %}
+                {% include 'plantas/_card_planta.html' %}
+            {% empty %}
+                <p class="text-muted">Nenhuma planta compartilhada ainda.</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,6 +1,8 @@
 from django.apps import AppConfig
 
-
 class PlantasConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'plantas'
+    
+    def ready(self):
+        import plantas.signals  # Conecta os sinais

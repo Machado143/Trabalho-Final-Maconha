@@ -1,5 +1,7 @@
 from django import forms
 from .models import Planta, Comentario
+from .models import UserProfile
+from .models import Denuncia
 
 class PlantaForm(forms.ModelForm):
     class Meta:
@@ -34,4 +36,30 @@ class ComentarioForm(forms.ModelForm):
         }
         labels = {
             'conteudo': 'Seu Comentário'
+        }
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ['avatar', 'bio', 'localizacao', 'nivel_experiencia']
+        widgets = {
+            'bio': forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'placeholder': 'Conte um pouco sobre você...'}),
+            'localizacao': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ex: São Paulo - SP'}),
+            'nivel_experiencia': forms.Select(attrs={'class': 'form-select'}),
+            'avatar': forms.FileInput(attrs={'class': 'form-control'}),
+        }
+        labels = {
+            'avatar': 'Foto de Perfil',
+            'bio': 'Bio',
+            'localizacao': 'Localização',
+            'nivel_experiencia': 'Nível de Experiência'
+        }
+
+class DenunciaForm(forms.ModelForm):
+    class Meta:
+        model = Denuncia
+        fields = ['categoria', 'descricao']
+        widgets = {
+            'categoria': forms.Select(attrs={'class': 'form-select'}),
+            'descricao': forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'placeholder': 'Descreva o problema...'}),
         }

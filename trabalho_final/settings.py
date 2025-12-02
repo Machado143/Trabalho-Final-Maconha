@@ -151,3 +151,15 @@ LOGOUT_REDIRECT_URL = '/'  # Vai para home após logout
 
 # Mensagens
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
+
+
+FILE_UPLOAD_MAX_MEMORY_SIZE = 5 * 1024 * 1024  # 5MB
+DATA_UPLOAD_MAX_MEMORY_SIZE = 5 * 1024 * 1024  # 5MB
+
+def validar_imagem(image):
+    from PIL import Image
+    img = Image.open(image)
+    # Limitar tamanho máximo da imagem
+    max_size = (1024, 1024)
+    if img.height > max_size[1] or img.width > max_size[0]:
+        raise ValueError(f"Imagem muito grande. Máximo: {max_size[0]}x{max_size[1]}px")

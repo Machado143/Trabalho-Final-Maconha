@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+
+{% block title %}Editar Perfil{% endblock %}
+
+{% block content %}
+<h2>Editar Meu Perfil</h2>
+
+<form method="post" enctype="multipart/form-data" class="form">
+    {% csrf_token %}
+    {% bootstrap_form profile_form %}
+    <button type="submit" class="btn btn-verde">Salvar Alterações</button>
+    <a href="{% url 'ver_perfil' user.username %}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}  

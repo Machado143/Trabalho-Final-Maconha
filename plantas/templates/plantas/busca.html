@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Buscar{% endblock %}
+
+{% block content %}
+<h2>🔍 Buscar</h2>
+
+<form method="get" class="mt-3 mb-4">
+    <div class="input-group">
+        <input type="text" name="q" class="form-control" placeholder="Busque por plantas ou usuários..." value="{{ query }}">
+        <button type="submit" class="btn btn-verde">Buscar</button>
+    </div>
+</form>
+
+{% if query %}
+    <h4>Plantas encontradas ({{ plantas|length }})</h4>
+    <div class="row">
+        {% for planta in plantas %}
+            {% include 'plantas/_card_planta.html' %}
+        {% empty %}
+            <p class="text-muted">Nenhuma planta encontrada.</p>
+        {% endfor %}
+    </div>
+
+    <h4 class="mt-4">Usuários encontrados ({{ usuarios|length }})</h4>
+    <div class="row">
+        {% for usuario in usuarios %}
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5>{{ usuario.username }}</h5>
+                        <p class="text-muted">{{ usuario.profile.bio|truncatewords:10 }}</p>
+                        <a href="{% url 'ver_perfil' usuario.username %}" class="btn btn-verde btn-sm">Ver Perfil</a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p class="text-muted">Nenhum usuário encontrado.</p>
+        {% endfor %}
+    </div>
+{% endif %}
+{% endblock %}
