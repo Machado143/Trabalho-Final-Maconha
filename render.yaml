@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: pai-do-verde
+    env: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn trabalho_final.wsgi:application"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10.12
+      - key: DATABASE_URL
+        value: sqlite:///db.sqlite3
+      - key: SECRET_KEY
+        generateValue: true
+      - key: WEB_CONCURRENCY
+        value: 4
