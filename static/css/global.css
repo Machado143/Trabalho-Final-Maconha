@@ -1,40 +1,589 @@
-:root {
-    --verde-primario: #2d6a4f;
-    --verde-secundario: #52b788;
-    --fundo: #f8f9fa;
-}
+/* ============================================
+   🌿 PAI DO VERDE - ESTILO MODERNO E CASUAL
+   ============================================ */
 
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: var(--fundo);
-    color: #333;
-}
+   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Caveat:wght@700&display=swap');
 
-.navbar {
-    background-color: var(--verde-primario);
-    padding: 1rem;
-    color: white;
-}
-
-.card-planta {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 1rem;
-    margin: 1rem 0;
-    background: white;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.btn-verde {
-    background-color: var(--verde-secundario);
-    color: white;
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-.card-img-top {
-    width: 100%; /* Largura total do container */
-    height: 200px; /* Altura fixa */
-    object-fit: cover; 
-}
+   :root {
+       /* Paleta de Verdes */
+       --verde-escuro: #1b4332;
+       --verde-primario: #2d6a4f;
+       --verde-medio: #40916c;
+       --verde-claro: #52b788;
+       --verde-pastel: #74c69d;
+       --verde-suave: #95d5b2;
+       --verde-clarissimo: #b7e4c7;
+       --creme: #d8f3dc;
+       
+       /* Cores de Suporte */
+       --branco: #ffffff;
+       --cinza-claro: #f8f9fa;
+       --cinza-medio: #dee2e6;
+       --texto: #2d3748;
+       --texto-claro: #718096;
+       
+       /* Sombras */
+       --sombra-leve: 0 2px 8px rgba(45, 106, 79, 0.1);
+       --sombra-media: 0 4px 16px rgba(45, 106, 79, 0.15);
+       --sombra-forte: 0 8px 24px rgba(45, 106, 79, 0.2);
+       
+       /* Transições */
+       --transicao: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+   }
+   
+   /* ============================================
+      RESET E BASE
+      ============================================ */
+   
+   * {
+       margin: 0;
+       padding: 0;
+       box-sizing: border-box;
+   }
+   
+   body {
+       font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+       background: linear-gradient(135deg, var(--creme) 0%, var(--branco) 100%);
+       color: var(--texto);
+       line-height: 1.6;
+       min-height: 100vh;
+   }
+   
+   /* ============================================
+      NAVBAR - ESTILO MODERNO
+      ============================================ */
+   
+   .navbar {
+       background: linear-gradient(135deg, var(--verde-primario) 0%, var(--verde-medio) 100%);
+       padding: 1.2rem 0;
+       box-shadow: var(--sombra-media);
+       position: sticky;
+       top: 0;
+       z-index: 1000;
+       backdrop-filter: blur(10px);
+   }
+   
+   .navbar-brand {
+       font-family: 'Caveat', cursive;
+       font-size: 1.8rem !important;
+       font-weight: 700;
+       color: var(--branco) !important;
+       text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+       transition: var(--transicao);
+   }
+   
+   .navbar-brand:hover {
+       transform: scale(1.05) rotate(-2deg);
+       color: var(--verde-clarissimo) !important;
+   }
+   
+   .navbar .text-white {
+       font-weight: 500;
+       padding: 0.5rem 1rem;
+       background: rgba(255, 255, 255, 0.1);
+       border-radius: 20px;
+       backdrop-filter: blur(10px);
+   }
+   
+   /* ============================================
+      BOTÕES - ESTILO CASUAL E MODERNO
+      ============================================ */
+   
+   .btn-verde,
+   .btn-success {
+       background: linear-gradient(135deg, var(--verde-claro) 0%, var(--verde-medio) 100%);
+       color: var(--branco);
+       border: none;
+       padding: 0.75rem 1.5rem;
+       border-radius: 25px;
+       font-weight: 600;
+       text-transform: uppercase;
+       letter-spacing: 0.5px;
+       font-size: 0.9rem;
+       box-shadow: var(--sombra-leve);
+       transition: var(--transicao);
+       cursor: pointer;
+       position: relative;
+       overflow: hidden;
+   }
+   
+   .btn-verde:hover,
+   .btn-success:hover {
+       transform: translateY(-2px) scale(1.02);
+       box-shadow: var(--sombra-forte);
+       background: linear-gradient(135deg, var(--verde-medio) 0%, var(--verde-primario) 100%);
+       color: var(--branco);
+   }
+   
+   .btn-verde:active,
+   .btn-success:active {
+       transform: translateY(0) scale(0.98);
+   }
+   
+   .btn-sm {
+       padding: 0.5rem 1rem;
+       font-size: 0.85rem;
+   }
+   
+   .btn-warning {
+       background: linear-gradient(135deg, #ffd93d 0%, #ff9d00 100%);
+       color: var(--texto);
+       border: none;
+       border-radius: 25px;
+       padding: 0.75rem 1.5rem;
+       font-weight: 600;
+       transition: var(--transicao);
+   }
+   
+   .btn-warning:hover {
+       transform: translateY(-2px);
+       box-shadow: var(--sombra-forte);
+   }
+   
+   .btn-danger {
+       background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+       color: var(--branco);
+       border: none;
+       border-radius: 25px;
+       padding: 0.75rem 1.5rem;
+       font-weight: 600;
+       transition: var(--transicao);
+   }
+   
+   .btn-danger:hover {
+       transform: translateY(-2px);
+       box-shadow: 0 8px 24px rgba(238, 90, 111, 0.3);
+   }
+   
+   .btn-light {
+       background: var(--branco);
+       color: var(--verde-primario);
+       border: 2px solid transparent;
+       border-radius: 20px;
+       font-weight: 600;
+       transition: var(--transicao);
+   }
+   
+   .btn-light:hover {
+       background: var(--verde-clarissimo);
+       border-color: var(--branco);
+       transform: translateY(-2px);
+   }
+   
+   .btn-outline-light {
+       border: 2px solid var(--branco);
+       color: var(--branco);
+       background: transparent;
+       border-radius: 20px;
+       font-weight: 600;
+       transition: var(--transicao);
+   }
+   
+   .btn-outline-light:hover {
+       background: var(--branco);
+       color: var(--verde-primario);
+       transform: translateY(-2px);
+   }
+   
+   /* ============================================
+      CARDS - ESTILO MODERNO COM GLASSMORPHISM
+      ============================================ */
+   
+   .card,
+   .card-planta {
+       background: var(--branco);
+       border: none;
+       border-radius: 20px;
+       overflow: hidden;
+       box-shadow: var(--sombra-leve);
+       transition: var(--transicao);
+       position: relative;
+   }
+   
+   .card:hover,
+   .card-planta:hover {
+       transform: translateY(-8px) scale(1.02);
+       box-shadow: var(--sombra-forte);
+   }
+   
+   .card::before {
+       content: '';
+       position: absolute;
+       top: 0;
+       left: 0;
+       width: 100%;
+       height: 4px;
+       background: linear-gradient(90deg, var(--verde-claro), var(--verde-pastel), var(--verde-suave));
+   }
+   
+   .card-img-top {
+       width: 100%;
+       height: 220px;
+       object-fit: cover;
+       transition: var(--transicao);
+   }
+   
+   .card:hover .card-img-top {
+       transform: scale(1.1);
+   }
+   
+   .card-body {
+       padding: 1.5rem;
+   }
+   
+   .card-title {
+       font-weight: 700;
+       color: var(--verde-primario);
+       font-size: 1.3rem;
+       margin-bottom: 1rem;
+       font-family: 'Poppins', sans-serif;
+   }
+   
+   .card-text {
+       color: var(--texto-claro);
+       font-size: 0.95rem;
+       line-height: 1.8;
+   }
+   
+   .card-text strong {
+       color: var(--verde-medio);
+       font-weight: 600;
+   }
+   
+   .card-header {
+       background: linear-gradient(135deg, var(--verde-pastel) 0%, var(--verde-suave) 100%);
+       border: none;
+       padding: 1rem 1.5rem;
+       font-weight: 600;
+       color: var(--verde-escuro);
+   }
+   
+   /* ============================================
+      CONTAINER E LAYOUT
+      ============================================ */
+   
+   .container {
+       max-width: 1200px;
+       margin: 0 auto;
+       padding: 2rem 1rem;
+   }
+   
+   main.container {
+       padding-top: 3rem;
+       padding-bottom: 3rem;
+   }
+   
+   /* ============================================
+      TÍTULOS E TEXTOS
+      ============================================ */
+   
+   h1, h2, h3, h4, h5, h6 {
+       font-weight: 700;
+       color: var(--verde-primario);
+       margin-bottom: 1.5rem;
+       font-family: 'Poppins', sans-serif;
+   }
+   
+   h1 {
+       font-size: 2.5rem;
+       position: relative;
+       display: inline-block;
+   }
+   
+   h1::after {
+       content: '';
+       position: absolute;
+       bottom: -10px;
+       left: 0;
+       width: 60px;
+       height: 4px;
+       background: linear-gradient(90deg, var(--verde-claro), var(--verde-pastel));
+       border-radius: 2px;
+   }
+   
+   h2 {
+       font-size: 2rem;
+   }
+   
+   h3 {
+       font-size: 1.5rem;
+       color: var(--verde-medio);
+   }
+   
+   p {
+       margin-bottom: 1rem;
+       color: var(--texto-claro);
+   }
+   
+   /* ============================================
+      ALERTAS E MENSAGENS
+      ============================================ */
+   
+   .alert {
+       border: none;
+       border-radius: 15px;
+       padding: 1rem 1.5rem;
+       margin-bottom: 1.5rem;
+       font-weight: 500;
+       box-shadow: var(--sombra-leve);
+       animation: slideDown 0.5s ease-out;
+   }
+   
+   @keyframes slideDown {
+       from {
+           opacity: 0;
+           transform: translateY(-20px);
+       }
+       to {
+           opacity: 1;
+           transform: translateY(0);
+       }
+   }
+   
+   .alert-success {
+       background: linear-gradient(135deg, var(--verde-suave) 0%, var(--verde-clarissimo) 100%);
+       color: var(--verde-escuro);
+   }
+   
+   .alert-danger {
+       background: linear-gradient(135deg, #ffe5e5 0%, #ffd1d1 100%);
+       color: #c92a2a;
+   }
+   
+   .alert-warning {
+       background: linear-gradient(135deg, #fff3cd 0%, #ffe69c 100%);
+       color: #856404;
+   }
+   
+   /* ============================================
+      FORMULÁRIOS
+      ============================================ */
+   
+   .form-control,
+   .form-select {
+       border: 2px solid var(--cinza-medio);
+       border-radius: 12px;
+       padding: 0.75rem 1rem;
+       font-size: 1rem;
+       transition: var(--transicao);
+       background: var(--branco);
+   }
+   
+   .form-control:focus,
+   .form-select:focus {
+       border-color: var(--verde-claro);
+       box-shadow: 0 0 0 4px rgba(82, 183, 136, 0.1);
+       outline: none;
+   }
+   
+   textarea.form-control {
+       min-height: 120px;
+       resize: vertical;
+   }
+   
+   label {
+       font-weight: 600;
+       color: var(--verde-primario);
+       margin-bottom: 0.5rem;
+       font-size: 0.95rem;
+   }
+   
+   /* ============================================
+      IMAGENS E PLACEHOLDERS
+      ============================================ */
+   
+   img {
+       max-width: 100%;
+       height: auto;
+       border-radius: 15px;
+   }
+   
+   .img-fluid {
+       box-shadow: var(--sombra-media);
+       transition: var(--transicao);
+   }
+   
+   .img-fluid:hover {
+       transform: scale(1.02);
+       box-shadow: var(--sombra-forte);
+   }
+   
+   /* ============================================
+      BADGES E TAGS
+      ============================================ */
+   
+   .badge {
+       padding: 0.5rem 1rem;
+       border-radius: 20px;
+       font-weight: 600;
+       font-size: 0.85rem;
+   }
+   
+   .badge-success {
+       background: linear-gradient(135deg, var(--verde-claro) 0%, var(--verde-pastel) 100%);
+   }
+   
+   /* ============================================
+      ESPAÇAMENTOS E UTILIDADES
+      ============================================ */
+   
+   .mt-4 { margin-top: 2rem; }
+   .mb-3 { margin-bottom: 1.5rem; }
+   .mb-4 { margin-bottom: 2rem; }
+   
+   .text-muted {
+       color: var(--texto-claro) !important;
+   }
+   
+   hr {
+       border: none;
+       height: 2px;
+       background: linear-gradient(90deg, transparent, var(--verde-pastel), transparent);
+       margin: 2rem 0;
+   }
+   
+   /* ============================================
+      ANIMAÇÕES PERSONALIZADAS
+      ============================================ */
+   
+   @keyframes float {
+       0%, 100% { transform: translateY(0); }
+       50% { transform: translateY(-10px); }
+   }
+   
+   .navbar-brand {
+       animation: float 3s ease-in-out infinite;
+   }
+   
+   /* ============================================
+      LOADING E SPINNERS
+      ============================================ */
+   
+   .spinner-border {
+       border-color: var(--verde-claro);
+       border-right-color: transparent;
+   }
+   
+   /* ============================================
+      RESPONSIVIDADE
+      ============================================ */
+   
+   @media (max-width: 768px) {
+       h1 { font-size: 2rem; }
+       h2 { font-size: 1.5rem; }
+       
+       .navbar-brand {
+           font-size: 1.5rem !important;
+       }
+       
+       .card-img-top {
+           height: 180px;
+       }
+       
+       .btn-verde,
+       .btn-success {
+           padding: 0.6rem 1.2rem;
+           font-size: 0.85rem;
+       }
+   }
+   
+   /* ============================================
+      EFEITOS ESPECIAIS
+      ============================================ */
+   
+   /* Efeito de brilho nos botões */
+   .btn-verde::before,
+   .btn-success::before {
+       content: '';
+       position: absolute;
+       top: 0;
+       left: -100%;
+       width: 100%;
+       height: 100%;
+       background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+       transition: left 0.5s;
+   }
+   
+   .btn-verde:hover::before,
+   .btn-success:hover::before {
+       left: 100%;
+   }
+   
+   /* Efeito de ondulação no card */
+   @keyframes ripple {
+       0% {
+           transform: scale(0);
+           opacity: 1;
+       }
+       100% {
+           transform: scale(4);
+           opacity: 0;
+       }
+   }
+   
+   /* ============================================
+      ESTILOS PARA LISTA DE PLANTAS
+      ============================================ */
+   
+   .row {
+       margin: 0 -0.75rem;
+   }
+   
+   .col-md-4 {
+       padding: 0 0.75rem;
+   }
+   
+   /* ============================================
+      FOOTER (CASO QUEIRA ADICIONAR)
+      ============================================ */
+   
+   footer {
+       background: linear-gradient(135deg, var(--verde-primario) 0%, var(--verde-medio) 100%);
+       color: var(--branco);
+       padding: 2rem 0;
+       margin-top: 4rem;
+       text-align: center;
+       box-shadow: 0 -4px 16px rgba(45, 106, 79, 0.15);
+   }
+   
+   /* ============================================
+      SCROLL SUAVE
+      ============================================ */
+   
+   html {
+       scroll-behavior: smooth;
+   }
+   
+   /* Scrollbar personalizada */
+   ::-webkit-scrollbar {
+       width: 12px;
+   }
+   
+   ::-webkit-scrollbar-track {
+       background: var(--cinza-claro);
+   }
+   
+   ::-webkit-scrollbar-thumb {
+       background: linear-gradient(180deg, var(--verde-claro), var(--verde-medio));
+       border-radius: 10px;
+   }
+   
+   ::-webkit-scrollbar-thumb:hover {
+       background: linear-gradient(180deg, var(--verde-medio), var(--verde-primario));
+   }
+   .img-fixa {
+    width: 800px;
+    height: 600px;
+    object-fit: cover;
+    border-radius: 15px;
+    box-shadow: var(--sombra-media);
+    }
+        
+    .img-responsiva-fixa {
+        max-width: 100%;
+        height: auto;
+        aspect-ratio: 4 / 3;
+        object-fit: cover;
+        border-radius: 15px;
+        box-shadow: var(--sombra-media);
+    }
