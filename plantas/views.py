@@ -195,24 +195,27 @@ def toggle_seguir(request, username):
     return redirect('ver_perfil', username=username)
 
 def ver_perfil(request, username):
-    """Visualizar perfil de um usuário"""
     usuario = get_object_or_404(User, username=username)
     plantas = usuario.planta_set.all().order_by('-criado_em')
-    
-    # Verificar se o usuário logado segue este perfil
+
+    # Quantidades
+    total_postagens = usuario.planta_set.count()
+    total_seguidores = usuario.seguidores.count()
+    total_seguindo = usuario.seguindo.count()
+
     esta_seguindo = False
     if request.user.is_authenticated:
         esta_seguindo = Seguir.objects.filter(seguidor=request.user, seguindo=usuario).exists()
-    
+
     context = {
         'usuario_perfil': usuario,
         'plantas': plantas,
         'esta_seguindo': esta_seguindo,
-        'total_seguidores': usuario.seguidores.count(),
-        'total_seguindo': usuario.seguindo.count(),
+        'total_postagens': total_postagens,      # ← ADICIONE ESTA
+        'total_seguidores': total_seguidores,
+        'total_seguindo': total_seguindo,
     }
     return render(request, 'plantas/perfil.html', context)
-
 @login_required
 def editar_perfil(request):
     if request.method == 'POST':
