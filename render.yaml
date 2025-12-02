@@ -7,9 +7,17 @@ services:
     envVars:
       - key: PYTHON_VERSION
         value: 3.10.12
-      - key: DATABASE_URL
-        value: sqlite:///db.sqlite3
+      - key: postgresql://pai_do_verde_db_user:ilT7R4TclRSnLOoRHc8DyGVOCEqJdEkU@dpg-d4nhdjq4d50c73ao7hhg-a/pai_do_verde_db
+        fromDatabase:
+          name: pai-do-verde-db
+          property: connectionString
       - key: SECRET_KEY
         generateValue: true
       - key: WEB_CONCURRENCY
         value: 4
+
+databases:
+  - name: pai-do-verde-db
+    databaseName: pai_do_verde
+    user: pai_do_verdo_user
+    plan: free
