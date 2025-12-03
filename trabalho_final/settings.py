@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 import dj_database_url
 import os
 from pathlib import Path
+import cloudinary
+import cloudinary_storage
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -43,6 +45,8 @@ INSTALLED_APPS = [
     'django_bootstrap5', 
     'rest_framework',
     'corsheaders',
+    'cloudinary',
+    'django_cloudinary_storage',
 ]
 
 MIDDLEWARE = [
@@ -166,3 +170,11 @@ def validar_imagem(image):
 
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+DEFAULT_FILE_STORAGE = 'django_cloudinary_storage.storage.MediaCloudinaryStorage'
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dhc9wlndb',
+    'API_KEY': '794375647363166',
+    'API_SECRET': 'Ifoa8Z5A9eOQ99pez1clKeftsL8',
+}
