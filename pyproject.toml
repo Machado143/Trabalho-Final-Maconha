@@ -1,9 +1,8 @@
 [tool.poetry]
 name = "pai-do-verde"
 version = "0.1.0"
-description = ""
+description = "Rede social de plantas"
 authors = ["Seu Nome <seu@email.com>"]
-packages = [{include = "trabalho_final"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
