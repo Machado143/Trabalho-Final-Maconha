@@ -3,17 +3,23 @@ services:
     name: pai-do-verde
     env: python
     buildCommand: "./build.sh"
-    startCommand: "gunicorn trabalho_final.wsgi:application"
-  envVars:
-  - key: CLOUDINARY_CLOUD_NAME
-    value: dhc9wlndb
-  - key: CLOUDINARY_API_KEY
-    value: 794375647363166
-  - key: CLOUDINARY_API_SECRET
-    value: Ifoa8Z5A9eOQ99pez1clKeftsL8
-
-databases:
-  - name: pai-do-verde-db
-    databaseName: pai_do_verde
-    user: pai_do_verdo_user
-    plan: free
+    startCommand: "python -m gunicorn trabalho_final.wsgi:application"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10.12
+      - key: RENDER_POETRY_INSTALL
+        value: "false"  # ← FORÇA pip ao invés de Poetry
+      - key: DATABASE_URL
+        fromDatabase:
+          name: pai-do-verde-db
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: WEB_CONCURRENCY
+        value: 4
+      - key: CLOUDINARY_CLOUD_NAME
+        value: dhc9wlndb
+      - key: CLOUDINARY_API_KEY
+        value: 794375647363166
+      - key: CLOUDINARY_API_SECRET
+        value: Ifoa8Z5A9eOQ99pez1clKeftsL8
