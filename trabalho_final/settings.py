@@ -19,11 +19,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY', default='django-insecure-local-dev-key-CHANGE-IN-PRODUCTION')
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = config(
-    'ALLOWED_HOSTS', 
-    default='localhost,127.0.0.1,.onrender.com',
-    cast=Csv()
-)
+
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    'trabalho-final-maconha.onrender.com'
+]
+
 
 # ============================================
 # APLICAÇÕES INSTALADAS
@@ -169,13 +171,16 @@ STORAGES = {
 # ============================================
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_DIRS = [BASE_DIR / 'static']
-
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
 # ============================================
 # ARQUIVOS DE MÍDIA (Uploads)
 # ============================================
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'  # Usado apenas em desenvolvimento local
+if DEBUG:
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = BASE_DIR / 'media'
+
 
 # ============================================
 # DJANGO REST FRAMEWORK
@@ -188,9 +193,14 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10,
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
-        'rest_framework.renderers.BrowsableAPIRenderer',
     ],
 }
+
+if DEBUG:
+    REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'].append(
+        'rest_framework.renderers.BrowsableAPIRenderer'
+    )
+
 
 # ============================================
 # CORS (Cross-Origin Resource Sharing)
@@ -204,7 +214,7 @@ CORS_ALLOWED_ORIGINS = [
 # Se estiver em produção, adicione seu domínio do Render
 if not DEBUG:
     CORS_ALLOWED_ORIGINS.append(
-        config('RENDER_EXTERNAL_URL', default='https://seu-app.onrender.com')
+        config('RENDER_EXTERNAL_URL', default='https://trabalho-final-maconha.onrender.com')
     )
 
 CORS_ALLOW_CREDENTIALS = True

@@ -3,6 +3,7 @@
    ============================================ */
 
    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Caveat:wght@700&display=swap');
+   @import url('osm-style.css');
 
    :root {
        /* Paleta de Verdes */
@@ -613,4 +614,14 @@
 /* Dashboard */
 canvas {
     max-height: 300px;
+}
+
+:root {
+    --verde-primario: #1e7e34;
+    --verde-medio: #ceefea;
+}
+
+
+body {
+    padding-top: 0 !important; /* Remove padding do Bootstrap */
 }

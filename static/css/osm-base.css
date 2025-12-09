@@ -1,0 +1,52 @@
+/* Estilos base do site */
+body {
+    padding-top: 0 !important;
+    background-color: var(--branco);
+    color: var(--cinza-texto);
+  }
+  
+  main {
+    margin-top: var(--espacamento-lg);
+    min-height: calc(100vh - 320px);
+  }
+  
+  /* Títulos */
+  h1, h2, h3 {
+    font-family: var(--fonte-primaria);
+    font-weight: 600;
+    color: var(--preto);
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+  }
+  
+  h2 {
+    font-size: 2rem;
+  }
+  
+  h3 {
+    font-size: 1.75rem;
+  }
+  
+  /* Container */
+  .container {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 var(--espacamento-sm);
+  }
+  
+  /* Backgrounds */
+  .bg-gradient-osm {
+    background: linear-gradient(135deg, var(--verde-primario), var(--verde-escuro));
+  }
+  
+  .bg-dark-osm {
+    background-color: var(--preto);
+  }
+  
+  .text-gradient {
+    background: linear-gradient(135deg, var(--verde-primario), var(--verde-escuro));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }

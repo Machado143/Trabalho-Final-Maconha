@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+
+{% block title %}Denunciar{% endblock %}
+
+{% block content %}
+<h2>🚨 Denunciar</h2>
+
+{% if tipo == 'planta' %}
+    <p>Denunciando a planta: <strong>{{ obj.nome }}</strong></p>
+{% elif tipo == 'comentario' %}
+    <p>Denunciando comentário de: <strong>{{ obj.autor.username }}</strong></p>
+{% elif tipo == 'perfil' %}
+    <p>Denunciando perfil de: <strong>{{ obj.username }}</strong></p>
+{% endif %}
+
+<form method="post" class="form">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <button type="submit" class="btn btn-danger">Enviar Denúncia</button>
+    <a href="{% url 'listar_plantas' %}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

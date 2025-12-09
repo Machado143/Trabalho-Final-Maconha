@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Confirmar Exclusão{% endblock %}
+
+{% block content %}
+<h2>🗑️ Confirmar Exclusão</h2>
+
+<div class="alert alert-warning">
+    <strong>Atenção!</strong> Esta ação não pode ser desfeita.
+</div>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <h4>{{ planta.nome }}</h4>
+        <p><strong>Espécie:</strong> {{ planta.especie }}</p>
+        <p><strong>Descrição:</strong> {{ planta.descricao|truncatewords:20 }}</p>
+    </div>
+</div>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Sim, excluir planta</button>
+    <a href="{% url 'detalhe_planta' planta.pk %}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

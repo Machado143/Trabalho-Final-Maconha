@@ -5,99 +5,150 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Pai do Verde{% endblock %}</title>
-    <link rel="icon" type="image/x-icon" href="{% static 'icons/a86494f07fb897b01489aa8d70410b73.ico' %}">
+    
+    <!-- Fontes do OSM -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;600;700&family=Caveat:wght@700&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap (mantido para funcionalidade) -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- OSM Style -->
+    <link rel="stylesheet" href="{% static 'css/osm-style.css' %}">
+    
+    <!-- Seu CSS personalizado (sobrescrito pelo OSM) -->
     <link rel="stylesheet" href="{% static 'css/global.css' %}">
-
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark shadow-sm" style="background: linear-gradient(135deg, var(--verde-primario), var(--verde-medio));">
-        <div class="container">
-          
-          <!-- Logo / Nome -->
-          <a class="navbar-brand fw-bold d-flex align-items-center" href="{% url 'index' %}" style="font-family: 'Caveat', cursive; font-size: 1.6rem;">
-            🌿 Pai do Verde
-          </a>
-      
-          <!-- Botão mobile -->
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-      
-          <!-- Conteúdo da navbar -->
-          <div class="collapse navbar-collapse" id="navbarMain">
-            
-            <!-- Busca -->
-            <form method="get" action="{% url 'buscar' %}" class="d-flex mx-auto my-2 my-lg-0" style="width: 40%; max-width: 400px;">
-              <input type="text" name="q" class="form-control form-control-sm rounded-pill" placeholder="Buscar plantas..." value="{{ request.GET.q }}">
-              <button type="submit" class="btn btn-sm btn-light ms-2 rounded-circle">🔍</button>
+    <!-- Header OSM -->
+    <header class="site-header">
+        <div class="header-inner">
+            <!-- Logo -->
+            <div class="site-branding">
+                <a class="navbar-brand fw-bold d-flex align-items-center" href="{% url 'index' %}">
+                    🌿 Pai do Verde
+                </a>
+            </div>
+
+            <!-- Navegação Desktop -->
+            <nav class="site-navigation d-none d-lg-flex">
+                <ul>
+                    <li><a href="{% url 'listar_plantas' %}">Catálogo</a></li>
+                    <li><a href="{% url 'ranking' %}">Ranking</a></li>
+                    <li><a href="{% url 'feed' %}">Feed</a></li>
+                    <li><a href="{% url 'colecoes' %}">Coleções</a></li>
+                </ul>
+            </nav>
+
+            <!-- Área de Busca -->
+            <form method="get" action="{% url 'buscar' %}" class="d-flex mx-auto my-2 my-lg-0" style="width: 30%; max-width: 300px;">
+                <input type="text" name="q" class="form-control form-control-osm rounded-pill" 
+                       placeholder="Buscar plantas..." value="{{ request.GET.q }}">
+                <button type="submit" class="btn btn-sm btn-osm ms-2">🔍</button>
             </form>
-      
-            <!-- Links / Botões -->
-            <ul class="navbar-nav ms-auto d-flex flex-row align-items-center gap-2">
-              
-              {% if user.is_authenticated %}
-                
-                <!-- Notificações -->
-                <li class="nav-item">
-                  <a href="{% url 'listar_notificacoes' %}" class="btn btn-sm btn-outline-light rounded-circle position-relative" style="font-size: 1.1rem;">
-                    🔔
-                    {% if notificacoes_nao_lidas > 0 %}
-                      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.6rem;">
-                        {{ notificacoes_nao_lidas }}
-                      </span>
-                    {% endif %}
-                  </a>
-                </li>
-      
-                <!-- Avatar / Perfil -->
-                <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle d-flex align-items-center gap-2" href="#" role="button" data-bs-toggle="dropdown">
-                {% if user.profile.avatar %}
-                    <img src="{{ user.profile.avatar.url }}" alt="Avatar" class="rounded-circle border border-2 border-white" width="36" height="36" style="object-fit: cover;">
-                {% else %}
-                    <span style="font-size: 1.3rem;">👤</span>
-                {% endif %}
-                    <span   span class="d-none d-lg-inline text-white fw-semibold">{{ user.username }}</span>
+
+            <!-- Usuário e Ações -->
+            <div class="d-flex align-items-center gap-2">
+                {% if user.is_authenticated %}
+                    <!-- Notificações -->
+                    <a href="{% url 'listar_notificacoes' %}" class="btn btn-header rounded-circle position-relative" style="width: 40px; height: 40px;">
+                        🔔
+                        {% if notificacoes_nao_lidas > 0 %}
+                            <span class="position-absolute top-0 start-100 translate-middle badge bg-danger rounded-pill" style="font-size: 0.6rem;">
+                                {{ notificacoes_nao_lidas }}
+                            </span>
+                        {% endif %}
                     </a>
-                  <ul class="dropdown-menu dropdown-menu-end shadow-sm">
-                    <li><a class="dropdown-item" href="{% url 'ver_perfil' user.username %}">Meu Perfil</a></li>
-                    <li><a class="dropdown-item" href="{% url 'editar_perfil' %}">Editar Perfil</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li>
-                      <form method="post" action="{% url 'logout' %}" class="d-inline">
-                        {% csrf_token %}
-                        <button type="submit" class="dropdown-item text-danger">Sair</button>
-                      </form>
-                    </li>
-                  </ul>
-                </li>
-      
-              {% else %}
-                
-                <!-- Visitante -->
-                <li class="nav-item">
-                  <a class="btn btn-sm btn-light rounded-pill px-3 me-2" href="{% url 'login' %}">Entrar</a>
-                </li>
-                <li class="nav-item">
-                  <a class="btn btn-sm btn-outline-light rounded-pill px-3" href="{% url 'signup' %}">Cadastrar</a>
-                </li>
-      
-              {% endif %}
-            </ul>
-          </div>
+
+                    <!-- Avatar Dropdown -->
+                    <div class="dropdown">
+                        <a href="#" class="nav-link dropdown-toggle d-flex align-items-center gap-2" 
+                           role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            {% if user.profile.avatar %}
+                                <img src="{{ user.profile.avatar.url }}" alt="Avatar" class="avatar-osm">
+                            {% else %}
+                                <span style="font-size: 1.3rem;">👤</span>
+                            {% endif %}
+                            <span class="d-none d-lg-inline text-white fw-semibold">{{ user.username }}</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+                            <li><a class="dropdown-item" href="{% url 'ver_perfil' user.username %}">Meu Perfil</a></li>
+                            <li><a class="dropdown-item" href="{% url 'editar_perfil' %}">Editar Perfil</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <form method="post" action="{% url 'logout' %}" class="d-inline w-100">
+                                    {% csrf_token %}
+                                    <button type="submit" class="dropdown-item text-danger">Sair</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                {% else %}
+                    <!-- Botões para visitantes -->
+                    <a href="{% url 'login' %}" class="btn btn-header-outline btn-sm">Entrar</a>
+                    <a href="{% url 'signup' %}" class="btn btn-header btn-sm">Cadastrar</a>
+                {% endif %}
+            </div>
+
+            <!-- Mobile Toggle -->
+            <button class="site-navigation-toggle d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMobile">
+                ☰
+            </button>
         </div>
-      </nav>
-    <main class="container mt-4">
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="collapse d-lg-none" id="navbarMobile">
+        <div class="site-navigation">
+            <ul>
+                <li><a href="{% url 'listar_plantas' %}">Catálogo</a></li>
+                <li><a href="{% url 'ranking' %}">Ranking</a></li>
+                <li><a href="{% url 'feed' %}">Feed</a></li>
+                <li><a href="{% url 'colecoes' %}">Coleções</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'ver_perfil' user.username %}">Meu Perfil</a></li>
+                    <li>
+                        <form method="post" action="{% url 'logout' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn text-danger w-100 text-start">Sair</button>
+                        </form>
+                    </li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Entrar</a></li>
+                    <li><a href="{% url 'signup' %}">Cadastrar</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+
+    <!-- Conteúdo Principal -->
+    <main class="container" style="margin-top: 120px;">
         {% if messages %}
             {% for message in messages %}
-                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show animate-in" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
             {% endfor %}
         {% endif %}
         
         {% block content %}{% endblock %}
     </main>
-    
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="site-branding">
+                <a href="{% url 'index' %}" class="navbar-brand">🌿 Pai do Verde</a>
+            </div>
+            <div>
+                <span class="text-white">&copy; 2025 Pai do Verde. Todos os direitos reservados.</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
