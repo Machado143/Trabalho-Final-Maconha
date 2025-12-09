@@ -9,9 +9,9 @@
         <div class="card">
             <div class="card-body text-center">
                 {% if usuario_perfil.profile.avatar %}
-                    <img src="{{ usuario_perfil.profile.avatar.url }}" class="rounded-circle mb-3" width="150" height="150" style="object-fit: cover;">
+                    <img src="{{ usuario_perfil.profile.avatar.url }}" class="rounded-circle mb-3 mx-auto d-block" width="150" height="150" style="object-fit: cover;">
                 {% else %}
-                    <img src="https://via.placeholder.com/150/4CAF50/FFFFFF?text=Avatar" class="rounded-circle mb-3">
+                    <img src="https://via.placeholder.com/150/4CAF50/FFFFFF?text=Avatar" class="rounded-circle mb-3 mx-auto d-block" width="150" height="150">
                 {% endif %}
                 
                 <h3>{{ usuario_perfil.username }}</h3>
