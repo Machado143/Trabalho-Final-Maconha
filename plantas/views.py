@@ -12,6 +12,7 @@ from django.core.paginator import Paginator
 from django.urls import reverse
 from django.db.models.functions import TruncMonth
 from django.template.loader import render_to_string
+from django.contrib.auth.models import User
 
 # Models
 from .models import (
