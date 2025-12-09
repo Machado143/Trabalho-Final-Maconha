@@ -186,16 +186,3 @@ class UsuarioConquistaAdmin(admin.ModelAdmin):
     list_display = ('usuario', 'conquista', 'desbloqueada_em')
     list_filter = ('conquista__tipo', 'desbloqueada_em')
     search_fields = ('usuario__username', 'conquista__nome')
-
-
-@admin.register(Colecao)
-class ColecaoAdmin(admin.ModelAdmin):
-    list_display = ('nome', 'usuario', 'publica', 'criada_em')
-    list_filter = ('publica', 'criada_em')
-    search_fields = ('nome', 'usuario__username')
-
-@admin.register(DiarioPlanta)
-class DiarioPlantaAdmin(admin.ModelAdmin):
-    list_display = ('titulo', 'planta', 'usuario', 'data', 'regou', 'fertilizou')
-    list_filter = ('data', 'regou', 'fertilizou')
-    search_fields = ('titulo', 'planta__nome', 'usuario__username')
