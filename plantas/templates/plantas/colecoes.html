@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Minhas Coleções{% endblock %}
+
+{% block content %}
+<h2>🌿 Minhas Coleções</h2>
+
+<div class="mb-3">
+    <a href="{% url 'criar_colecao' %}" class="btn btn-success">+ Nova Coleção</a>
+</div>
+
+<div class="row">
+    {% if colecoes %}
+        {% for colecao in colecoes %}
+        <div class="col-md-4">
+            <div class="card stat-card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ colecao.nome }}</h5>
+                    <p class="card-text">{{ colecao.descricao|truncatechars:100 }}</p>
+                    <a href="{% url 'ver_colecao' colecao.id %}" class="btn btn-light">Ver Coleção</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>Você ainda não criou nenhuma coleção.</p>
+    {% endif %}
+</div>
+{% endblock %}

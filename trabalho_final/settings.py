@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'cloudinary_storage',  # DEVE vir ANTES de 'cloudinary'
     'cloudinary',
+    'django_charts',
 ]
 
 # ============================================

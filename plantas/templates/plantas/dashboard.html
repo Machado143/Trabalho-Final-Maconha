@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<h2>📊 Dashboard</h2>
+
+<canvas id="chart"></canvas>
+
+<script>
+    const ctx = document.getElementById('chart').getContext('2d');
+    const chartData = {{ chart_data|safe }};
+    new Chart(ctx, {
+        type: 'bar',
+        data: chartData,
+    });
+</script>
+{% endblock %}

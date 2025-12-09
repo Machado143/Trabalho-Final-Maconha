@@ -195,3 +195,214 @@ class Notificacao(models.Model):
 
     def __str__(self):
         return f"{self.tipo} para {self.usuario.username}"
+
+# ============================================
+# COLEÇÕES E DIÁRIO
+# ============================================
+
+class Colecao(models.Model):
+    nome = models.CharField(max_length=100)
+    descricao = models.TextField(blank=True)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, related_name='colecoes')
+    plantas = models.ManyToManyField(Planta, related_name='colecoes', blank=True)
+    publica = models.BooleanField(default=False)
+    criada_em = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'Coleção'
+        verbose_name_plural = 'Coleções'
+        unique_together = ('usuario', 'nome')
+
+    def __str__(self):
+        return f'{self.nome} - {self.usuario.username}'
+
+class DiarioPlanta(models.Model):
+    planta = models.ForeignKey(Planta, on_delete=models.CASCADE, related_name='diario')
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    data = models.DateField()
+    titulo = models.CharField(max_length=200)
+    anotacao = models.TextField(blank=True)
+    regou = models.BooleanField(default=False)
+    fertilizou = models.BooleanField(default=False)
+    imagem = models.ImageField(upload_to='diario/', null=True, blank=True)
+    criado_em = models.DateTimeField(auto_now_add=True)
+    altura = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True, verbose_name='Altura (cm)')
+    temperatura = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True, verbose_name='Temperatura (°C)')
+    umidade = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True, verbose_name='Umidade (%)')
+
+    class Meta:
+        verbose_name = 'Diário de Planta'
+        verbose_name_plural = 'Diários de Plantas'
+        ordering = ['-data']
+        unique_together = ('planta', 'usuario', 'data')
+
+    def __str__(self):
+        return f'{self.planta.nome} - {self.data}'
+
+# ============================================
+# LEMBRETES
+# ============================================
+
+class Lembrete(models.Model):
+    TIPO_CHOICES = [
+        ('REGAR', 'Regar'),
+        ('FERTILIZAR', 'Fertilizar'),
+        ('PODAR', 'Podar'),
+        ('REPOR_VASO', 'Repor vaso'),
+        ('OUTRO', 'Outro'),
+    ]
+
+    FREQUENCIA_CHOICES = [
+        ('DIARIO', 'Diário'),
+        ('SEMANAL', 'Semanal'),
+        ('MENSAL', 'Mensal'),
+        ('ANUAL', 'Anual'),
+        ('UNICO', 'Único'),
+    ]
+
+    planta = models.ForeignKey(Planta, on_delete=models.CASCADE, related_name='lembretes')
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    tipo = models.CharField(max_length=20, choices=TIPO_CHOICES)
+    titulo = models.CharField(max_length=200)
+    descricao = models.TextField(blank=True)
+    frequencia = models.CharField(max_length=10, choices=FREQUENCIA_CHOICES, default='UNICO')
+    proxima_data = models.DateField()
+    ativo = models.BooleanField(default=True)
+    notas = models.TextField(blank=True)
+    criado_em = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'Lembrete'
+        verbose_name_plural = 'Lembretes'
+        ordering = ['proxima_data']
+
+    def __str__(self):
+        return f'{self.tipo} - {self.planta.nome}'
+
+# ============================================
+# MENSAGENS
+# ============================================
+
+class Mensagem(models.Model):
+    remetente = models.ForeignKey(User, on_delete=models.CASCADE, related_name='mensagens_enviadas')
+    destinatario = models.ForeignKey(User, on_delete=models.CASCADE, related_name='mensagens_recebidas')
+    assunto = models.CharField(max_length=200, blank=True)
+    conteudo = models.TextField()
+    lida = models.BooleanField(default=False)
+    criada_em = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'Mensagem'
+        verbose_name_plural = 'Mensagens'
+        ordering = ['-criada_em']
+
+    def __str__(self):
+        return f'De {self.remetente.username} para {self.destinatario.username}'
+
+# ============================================
+# ENQUETES
+# ============================================
+
+class Enquete(models.Model):
+    pergunta = models.CharField(max_length=500)
+    descricao = models.TextField(blank=True)
+    autor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='enquetes')
+    ativa = models.BooleanField(default=True)
+    data_inicio = models.DateTimeField(auto_now_add=True)
+    data_fim = models.DateTimeField(null=True, blank=True)
+    criada_em = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'Enquete'
+        verbose_name_plural = 'Enquetes'
+        ordering = ['-criada_em']
+
+    def __str__(self):
+        return self.pergunta
+
+    def total_votos(self):
+        return self.opcoes.aggregate(total=models.Sum('votos'))['total'] or 0
+
+class OpcaoEnquete(models.Model):
+    enquete = models.ForeignKey(Enquete, on_delete=models.CASCADE, related_name='opcoes')
+    texto = models.CharField(max_length=200)
+    ordem = models.IntegerField(default=0)
+    votos = models.IntegerField(default=0)
+
+    class Meta:
+        verbose_name = 'Opção de Enquete'
+        verbose_name_plural = 'Opções de Enquetes'
+        ordering = ['ordem']
+
+    def __str__(self):
+        return f'{self.enquete.pergunta} - {self.texto}'
+
+class VotoEnquete(models.Model):
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    opcao   = models.ForeignKey(OpcaoEnquete, on_delete=models.CASCADE)
+    criado_em = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'Voto de Enquete'
+        verbose_name_plural = 'Votos de Enquetes'
+        # ↓↓↓ CORREÇÃO ↓↓↓
+        unique_together = ('usuario', 'opcao')
+
+    def __str__(self):
+        return f'{self.usuario.username} votou em {self.opcao.texto}'
+
+# ============================================
+# CONQUISTAS
+# ============================================
+
+class Conquista(models.Model):
+    TIPO_CHOICES = [
+        ('POSTAGENS', 'Postagens'),
+        ('LIKES', 'Likes'),
+        ('SEGUIDORES', 'Seguidores'),
+        ('BADGES', 'Badges'),
+        ('ATIVIDADE', 'Atividade'),
+        ('ESPECIAL', 'Especial'),
+    ]
+
+    RARA_CHOICES = [
+        ('COMUM', 'Comum'),
+        ('RARA', 'Rara'),
+        ('EPICA', 'Épica'),
+        ('lendaria', 'Lendária'),
+    ]
+
+    nome = models.CharField(max_length=100, unique=True)
+    descricao = models.TextField()
+    icone = models.CharField(max_length=5, default='🏆')
+    tipo = models.CharField(max_length=15, choices=TIPO_CHOICES)
+    pontos = models.IntegerField(default=10)
+    rara = models.CharField(max_length=10, choices=RARA_CHOICES, default='COMUM')
+    criterio = models.CharField(max_length=100, help_text="Ex: '5_postagens', '10_likes'")
+    criada_em = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'Conquista'
+        verbose_name_plural = 'Conquistas'
+        ordering = ['tipo', 'pontos']
+
+    def __str__(self):
+        return f'{self.icone} {self.nome}'
+
+    def total_desbloqueadas(self):
+        return self.usuarioconquista_set.count()
+
+class UsuarioConquista(models.Model):
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, related_name='conquistas')
+    conquista = models.ForeignKey(Conquista, on_delete=models.CASCADE)
+    desbloqueada_em = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'Conquista do Usuário'
+        verbose_name_plural = 'Conquistas dos Usuários'
+        unique_together = ('usuario', 'conquista')
+
+    def __str__(self):
+        return f'{self.usuario.username} - {self.conquista.nome}'
+
+
