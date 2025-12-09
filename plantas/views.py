@@ -762,8 +762,3 @@ def listar_notificacoes(request):
         'total_nao_lidas': nao_lidas.count()
     })
 
-def ranking(request):
-    return render(request, 'plantas/ranking.html', {})
-
-def feed(request):
-    return render(request, 'plantas/feed.html')
